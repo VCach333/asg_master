@@ -23,7 +23,7 @@ const Prod = new Schema({
         required: true
     },
     cores: {
-        type: String,
+        type: [String],
         required: true
     },
     date: {

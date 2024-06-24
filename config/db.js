@@ -1,5 +1,5 @@
 if(process.env.PORT) {
-    module.exports = {MongoURI: "mongodb+srv://VCach333:j!b$yTj#6B$9aeS@blogdio.2cysr.mongodb.net/blogdio"}
+    module.exports = {MongoURI: "mongodb+srv://VCach333:fibonacci@loja.hpnkm.mongodb.net/asg"}
 } else {
     module.exports = {MongoURI: "mongodb://localhost/asg"}
 }

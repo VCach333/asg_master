@@ -1,0 +1,41 @@
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper">
+            <div class="container">
+
+                <a href="#" class="brand-logo truncate hide-on-med-and-down show-on-large">AngeSimone glamour</a>
+                <a href="#" class="brand-logo truncate show-on-med-and-down hide-on-large-only">AS glamour</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="bx bx-menu"></i></a>
+
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/">Casa</a></li>
+                    <li><a href="/produtos">Produtos</a></li>
+                    <li><a href="/info"><i class="bx bx-info-circle"></i></a></li>
+
+                    {{#if user}}
+                    <li><a href="/user/perfil"><i class="bx bx-user"></i></a></li>
+                    {{else}}
+                    <li><a href="/user/login"><i class="bx bx-user"></i></a></li>
+                    {{/if}}
+                </ul>
+
+                <ul class="right top-5 hide-on-large-only">
+                    <li><a href="login.html"><i class="bx bx-user"></i></a></li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</div>
+
+<ul class="sidenav" id="mobile-demo">
+    <li><a></a></li>
+    <li><a href="/"><i class="bx bx-home"></i> Casa</a></li>
+    <li><a href="/produtos"><i class="bx bx-shopping-bag"></i>Produtos</a></li>
+    <li><a href="/info"><i class="bx bx-info-circle"></i> Info.</a></li>
+    {{#if user}}
+    <li><a href="/user/perfil"><i class="bx bx-user"></i> Perfil</a></li>
+    {{else}}
+    <li><a href="/user/login"><i class="bx bx-user"></i> Login</a></li>
+    {{/if}}
+</ul>

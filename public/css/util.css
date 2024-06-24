@@ -1,0 +1,59 @@
+:root {
+    --primary: #8e24aa;
+    --secondary: #66ffff;
+    --dark: #333;
+    --white: #fff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+
+    overflow-x: hidden;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+nav ul li,
+.upper-text {
+    text-transform: uppercase;
+}
+
+.w-100 { width: 100% !important; }
+
+.top-5 { margin-top: 5px; }
+.top-10 { margin-top: 10px; }
+.top-20 { margin-top: 20px; }
+.top-50 { margin-top: 50px; }
+.top-100 { margin-top: 100px; }
+
+.top-20- { margin-top: -20px; }
+.top-35- { margin-top: -35px; }
+.top-50- { margin-top: -50px; }
+
+.bottom-50 { margin-bottom: 50px; }
+
+.r-45 { transform: rotate(45deg); }
+
+.left-text { text-align: left !important; }
+
+.padd-0 { padding: 0 !important; }

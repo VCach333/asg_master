@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+  },
+  "name": "asg",
+  "version": "2.0.0",
+  "description": "ecommerce for AngeSimone glomour Enteprise",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vcach333",
+  "license": "ISC"
+}

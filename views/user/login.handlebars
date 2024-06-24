@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="row unselected">
+        <div class="col s10 m6 l4 push-s1 push-m3 push-l4">
+
+            {{#if admin_found}}
+            <h4 class="upper titulo">Entrar</h4>
+            <hr>
+
+            <div class="row">
+                <form action="" method="post" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input name="ident" id="ident" type="number">
+                            <label for="ident">Telefone</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input name="senha" id="senha" type="password">
+                            <label for="senha">Senha</label>
+                        </div>
+
+                        <div class="col s12">
+                            <p class="top-20-">
+                                <label>
+                                    <input type="checkbox" onclick="modoLimpo()" />
+                                    <span>Ver Senha</span>
+                                </label>
+                            </p>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <button class="btn w-100">entrar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row center">
+                <p class="top-100">
+                    Não Tens uma Conta?
+                </p>
+
+                <a href="/user/cadastro" class="btn blue-grey darken-3 top-20">Criar</a>
+            </div>
+
+            {{else}}
+            <h5 class="center">Comece por Criar a Conta Admin</h5>
+            <hr class="admin"> <br>
+
+            <form action="/admin/cadastro" method="post">
+                <button type="submit" class="no-btn w-100 transparent">
+                    <div class="card admin">
+                        <div class="card-content">
+                            <h4 class="upper">Criar Admin</h4>
+                        </div>
+                    </div>
+                </button>
+            </form>
+
+
+            <p class="center top-50">
+                Após clicar em Criar Admin, contate o Desenvolvedor deste WebSite <br><br>
+                <a href="/info#desenvolvedores">
+                    <span class="primary-text number">vladmircach333@gmail.com</span> <br>
+                    <span class="primary-text number">Vladmir Cach</span>
+                </a>
+            </p>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="row unselected">
+
+        <div class="col s10 m6 push-s1 push-m3">
+            {{#each erros}}
+            <div class="error_msg card red lighten-2 white-text center">
+                <p class="flash-msg">
+                    {{texto}}
+                </p>
+            </div>
+            {{else}}
+
+            {{/each}}
+        </div>
+    </div>

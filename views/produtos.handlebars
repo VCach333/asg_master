@@ -1,0 +1,186 @@
+<div class="container">
+    <div class="row">
+        <h4 class="upper titulo">
+            <i class="bx bx-shopping-bag primary-text"></i>
+            Nossos Produtos
+        </h4>
+        <hr>
+    </div>
+
+    <div class="row">
+        {{#each cats}}
+        <a href="/categorias/ver/{{_id}}">
+            <div class="chip">
+                {{titulo}}
+            </div>
+        </a>
+        {{/each}}
+        {{#if cats}}
+        <a href="/categorias">
+            <div class="chip">
+                mais
+            </div>
+        </a>
+        {{else}}
+        <a href="/admin/categorias/cadastro">
+            <div class="chip">cadastrar</div>
+        </a>
+        {{/if}}
+    </div>
+
+    <div class="row top-100">
+        {{#if admin}}
+        {{#each prods}}
+        <div class="col s10 m6 l4 push-s1">
+            <div class="card sticky-action">
+
+                <div class="card-image">
+                    <img src="/img/corpo/{{foto}}" class="materialboxed">
+                </div>
+
+                <div class="card-action">
+                    <span class="card-title activator truncate">
+                        <i class="bx bx-chevron-up"></i>
+                        {{nome}}
+                    </span> <br>
+                    <span class="detalhe lower">{{categoria}}</span> <br>
+                </div>
+
+                <div class="card-action">
+                    <a></a>
+                    <a class="btn right" href="produtos_ver.html">ver</a>
+                </div>
+
+                <div class="card-reveal blur-10">
+                    <div class="center">
+
+                        <span class="card-title activator">
+                            <i class="bx bx-x bx-md"></i><br>
+                            {{nome}}
+                        </span>
+                    </div>
+
+                    <div class="top-20">
+
+
+                        <span class="detalhe">Cor</span>
+                        <span class="cores">{{cores}}</span>
+
+                        <br><br>
+                        <span class="detalhe">Stock</span>
+                        <span>{{stock}}</span>
+
+                        <br><br>
+                        <span class="detalhe black money">
+                            <span class="money_format" style="font-size: large;">{{preco}}</span>
+                            <i class="bx bxs-coin-stack"></i>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {{else}}
+        <div class="col s10 m4 push-s1 push-m4">
+            <div class="card blue-grey darken-3 white-text">
+                <div class="card-content">
+                    <span class="card-title">Sem Produtos</span>
+                    <blockquote class="top-20">
+                        <span>Não há Produtos. Após Cadastra-las, aparecerão aqui</span>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{else}}
+        {{#each prods}}
+        <div class="col s10 m6 l4 push-s1">
+            <div class="card sticky-action">
+
+                <div class="card-image">
+                    <img src="/img/corpo/{{foto}}" class="materialboxed">
+                </div>
+
+                <div class="card-action">
+                    <span class="card-title activator truncate">
+                        <i class="bx bx-chevron-up"></i>
+                        {{nome}}
+                    </span> <br>
+                    <span class="detalhe lower">{{categoria}}</span> <br>
+                </div>
+
+                <div class="card-action">
+                    <a></a>
+                    <a class="btn right" href="produtos_ver.html">ver</a>
+                </div>
+
+                <div class="card-reveal blur-10">
+                    <div class="center">
+
+                        <span class="card-title activator">
+                            <i class="bx bx-x bx-md"></i><br>
+                            {{nome}}
+                        </span>
+                    </div>
+
+                    <div class="top-20">
+
+
+                        <span class="detalhe">Cor</span>
+                        <span class="cores">{{cores}}</span>
+
+                        <br><br>
+                        <span class="detalhe">Stock</span>
+                        <span>{{stock}}</span>
+
+                        <br><br>
+                        <span class="detalhe black money">
+                            <span class="money_format" style="font-size: large;">{{preco}}</span>
+                            <i class="bx bxs-coin-stack"></i>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {{else}}
+        <div class="col s10 m4 push-s1 push-m4">
+            <div class="card blue-grey darken-3 white-text">
+                <div class="card-content">
+                    <span class="card-title">Sem Produtos</span>
+                    <blockquote class="top-20">
+                        <span>Não há Produtos. Brevemente os Administradores Cadastrarão</span>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{/if}}
+    </div>
+</div>
+
+
+<script>
+
+    var money_format = new Intl.NumberFormat(
+        'en-US',
+        { style: 'currency', currency: 'AOA' }
+    );
+
+    let money_count = document.getElementsByClassName('money_format').length;
+
+    for (let cont = 0; cont < money_count; cont++) {
+        document.getElementsByClassName('money_format')[cont].textContent = money_format.format(document.getElementsByClassName('money_format')[cont].textContent);
+
+
+        let cores_array = document.getElementsByClassName('cores')[cont].textContent.split(',');
+        document.getElementsByClassName('cores')[cont].innerHTML = '';
+
+        for (let _cont = 0; _cont < cores_array.length; _cont++) {
+            document.getElementsByClassName('cores')[cont].innerHTML += `
+                <span class="detalhe ${cores_array[_cont]}"></span>
+            `;
+        }
+    }
+
+</script>

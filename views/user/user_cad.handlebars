@@ -1,0 +1,72 @@
+<div class="row container">
+
+    <div class="row">
+
+        <div class="col s10 m6 l4 push-s1 push-m3 push-l4">
+            <h4 class="upper titulo">Criar conta</h4>
+            <hr>
+
+            <form action="/user/cadastro" method="post" class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input name="nome" id="nome" type="text">
+                        <label for="nome">Nome</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <input name="ident" id="ident" type="number">
+                        <label for="ident">Telefone</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <input name="senha" id="senha" type="password">
+                        <label for="senha">Senha</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <input name="conf_senha" id="conf_senha" type="password">
+                        <label for="conf_senha">Confirme a Senha</label>
+                    </div>
+
+                    <div class="col s12">
+                        <p class="top-20-">
+                            <label>
+                                <input type="checkbox" onclick="modoLimpo()" />
+                                <span>Ver Senha</span>
+                            </label>
+                        </p>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <button class="btn w-100">criar</button>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+    <div class="row center">
+        <p class="top-100">
+            Já Tens uma Conta?
+        </p>
+
+        <a href="/user/login" class="btn blue-grey darken-3 top-20">entrar</a>
+    </div>
+
+    <div class="row unselected">
+        <div class="col s10 m6 push-s1 push-m3">
+            {{#each erros}}
+            <div class="error_msg card red lighten-2 white-text center">
+                <p class="flash-msg">
+                    {{texto}}
+                </p>
+            </div>
+            {{else}}
+
+            {{/each}}
+        </div>
+    </div>
+
+</div>

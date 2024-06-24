@@ -1,0 +1,64 @@
+ 
+
+<div class="container">
+    <div class="row">
+        <div class="col s10 m6 push-s1 push-m3">
+            
+            <h4>Atualizar Dados do Usuário</h4>
+            <hr>
+            <br>
+            
+            <form action="/user/edit" method="post">
+                <input type="hidden" name="id" value="{{user._id}}">
+
+                <div class="input-field col s12">
+                    <input value="{{user.nome}}" name="nome" id="nome" type="text">
+                    <label for="nome">Nome</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <input value="{{user.ident}}" name="ident" id="ident" type="number">
+                    <label for="ident">Telefone</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <input value="{{user.senha}}" name="senha" id="senha" type="password">
+                    <label for="senha">Senha</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <input value="{{user.conf_senha}}" name="conf_senha" id="conf_senha" type="password">
+                    <label for="conf_senha">Confirme a Senha</label>
+                </div>
+
+                <div class="col s12">
+                    <p class="top-20-">
+                        <label>
+                            <input type="checkbox" onclick="modoLimpo()" />
+                            <span>Ver Senha</span>
+                        </label>
+                    </p>
+                </div>
+
+                <div class="col s12 top-20">
+                    <button class="btn waves-effect waves-effect w-100">Atualizar-me</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col s10 m6 push-s1 push-m3">
+            {{#each erros}}
+            <div class="error_msg card red lighten-2 white-text center">
+                <p class="flash-msg">
+                    {{texto}}
+                </p>
+            </div>
+            {{else}}
+
+            {{/each}}
+        </div>
+    </div>
+</div>

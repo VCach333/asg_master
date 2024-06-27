@@ -16,7 +16,7 @@ const User = new Schema({
     },
     mode: {
         type: String,
-        default: 'user'
+        default: 'cliente'
     },
     status: {
         type: String,

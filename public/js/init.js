@@ -3,6 +3,8 @@ document.body.onload = () => {
     $('select').formSelect();
     $('.tooltipped').tooltip();
     $('.materialboxed').materialbox();
+    $('input#titulo_faq, textarea#desc_faq').characterCounter();
+
 
     $('.fixed-action-btn').floatingActionButton({
         direction: 'top',

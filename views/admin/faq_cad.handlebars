@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row unselected">
+        <div class="col s12 m6 push-m3">
+
+            <h4 class="upper titulo">Cadastrar FAQ</h4>
+            <hr>
+
+
+            <div class="row">
+                <form action="/admin/faq/cadastro" method="post">
+                    <div class="row">
+
+                        <div class="input-field col s8">
+                            <input name="titulo_faq" id="titulo_faq" type="text" data-length="100">
+                            <label for="titulo_faq">Título</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <textarea name="desc_faq" id="desc_faq" data-length="500" class="materialize-textarea"></textarea>
+                            <label for="desc_faq">Descrição</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <button class="btn w-100">Cadastrar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row unselected">
+
+        <div class="col s10 m6 push-s1 push-m3">
+            {{#each erros}}
+            <div class="error_msg card red lighten-2 white-text center">
+                <p class="flash-msg">
+                    {{texto}}
+                </p>
+            </div>
+            {{else}}
+
+            {{/each}}
+        </div>
+    </div>
+</div>

@@ -63,6 +63,11 @@ a {
     -webkit-backdrop-filter: blur(10px) !important;
 }
 
+.card-image {
+    height: 35vh !important;
+    overflow: hidden;
+}
+
 .sidenav a,
 .sidenav a>i {
     color: var(--dark) !important;
@@ -357,4 +362,20 @@ hr {
 .fixed-content {
     position: fixed !important;
     z-index: 100 !important;
+}
+
+
+.cats {
+
+    display: flex;
+    flex-direction: row;
+
+    height: 7vh !important;
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.cats .chip {
+
 }

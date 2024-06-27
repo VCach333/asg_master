@@ -1,0 +1,98 @@
+<div class="container">
+    <div class="row unselected">
+        <div class="col s10 m6 l4 push-s1 push-m3 push-l4">
+
+            <h4 class="upper titulo">Atualizar Produto</h4>
+            <hr>
+
+
+            <div class="row">
+                <form action="/admin/produtos/edit/{{prod_edit._id}}" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="file-field input-field col s12">
+                            <div class="btn">
+                                <span><i class="bx bx-camera"></i></span>
+                                <input name="foto" type="file" accept="image/*" value="{{prod_edit.foto}}">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input name="fotoText" class="file-path validate" type="text"
+                                    value="{{prod_edit.foto}}">
+                            </div>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <input name="nome" id="nome" type="text" value="{{prod_edit.nome}}">
+                            <label for="nome">Nome</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <select name="categoria">
+                                <option value="{{prod_edit.categoria}}" selected>{{prod_edit.categoria}}</option>
+                                {{#each cats}}
+                                <option value="{{titulo}}">{{titulo}}</option>
+                                {{else}}
+                                <option value="">Sem Categorias. Cadastre uma Primeiro</option>
+                                {{/each}}
+                            </select>
+                            <label>Categoria</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <select name="cores" multiple>
+                                <option value="{{prod_edit.cores}}" selected>{{prod_edit.cores}}</option>
+                                <option value="yellow">Amarelo</option>
+                                <option value="amber">Amber</option>
+                                <option value="blue">Azul</option>
+                                <option value="blue-grey">Azul-cinza</option>
+                                <option value="white">Branco</option>
+                                <option value="brown">Castanho</option>
+                                <option value="cyan">Ciano</option>
+                                <option value="grey">Cinza</option>
+                                <option value="indigo">Índigo</option>
+                                <option value="orange">Laranja</option>
+                                <option value="lime">Limão</option>
+                                <option value="black">Preto</option>
+                                <option value="purple">Púrpura</option>
+                                <option value="pink">Rosa</option>
+                                <option value="teal">Teal</option>
+                                <option value="green">Verde</option>
+                                <option value="red">Vermelho</option>
+                            </select>
+                            <label>Cor(es)</label>
+                        </div>
+
+
+                        <div class="input-field col s8">
+                            <input name="preco" id="preco" type="number" value="{{prod_edit.preco}}">
+                            <label for="preco">Preço</label>
+                        </div>
+
+                        <div class="input-field col s4">
+                            <input name="stock" id="stock" type="number" value="{{prod_edit.stock}}">
+                            <label for="stock">stock</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                            <button class="btn w-100">Atualizar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row unselected">
+
+        <div class="col s10 m6 push-s1 push-m3">
+            {{#each erros}}
+            <div class="error_msg card red lighten-2 white-text center">
+                <p class="flash-msg">
+                    {{texto}}
+                </p>
+            </div>
+            {{else}}
+
+            {{/each}}
+        </div>
+    </div>

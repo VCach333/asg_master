@@ -1,9 +1,8 @@
  
 
 <div class="container">
-    {{!-- {{>_admin_tools}} --}}
 
-    <h4>Controle de Usuários</h4>
+    <h4>Controle de Clientes</h4>
     <hr>
     <a href="/admin/user/cadastro" class="btn top-22- bottom-50 right admin"><i class="bx bx-plus"></i></a>
 
@@ -89,7 +88,7 @@
 
                 {{#if users}}
                     <hr>
-                    <small class="primary-text">{{users_count}} Usuário(s) | {{users_online_count}} online(s)</small>
+                    <small class="primary-text">{{users_count}} Cliente(s) | {{users_online_count}} online(s)</small>
                 {{/if}}
                 {{#each users}}
 
@@ -118,7 +117,7 @@
                                             <span class="card-title">{{nome}}</span>
                                             <span class="truncate {{status}}">{{ident}}</span>
                                             <br>
-                                            <small class="{{mode}}">{{mode}}</small>
+                                            <small class="{{mode}} detalhe primary">{{mode}}</small>
                                             <br><br>
                                             <small>{{morada}}</small> <br>
                                             <small>{{date}}</small>
@@ -134,12 +133,12 @@
                                                 <a href="#modal-confirm-{{_id}}" class="btn modal-trigger red w-100">
                                                     Banir
                                                 </a>
-                                                <label class="grey-text text-darken-3">Isto Deleta o Usuário da Base de Dados. (Irreversível)</label>
+                                                <label class="grey-text text-darken-3">Isto Deleta o Cliente da Base de Dados. (Irreversível)</label>
                                                 <br><br>
                                                 <a href="#modal-confirm-addAdmin-{{ident}}" class="btn w-100 admin modal-trigger waves-effect">
                                                     Admin
                                                 </a>  
-                                                <label class="grey-text text-darken-3">Isto Adiciona os Privilégios de Administrador a este Usuário</label>
+                                                <label class="grey-text text-darken-3">Isto Adiciona os Privilégios de Administrador a este Cliente</label>
                                             </div>
                                         </div>
                                     </div>
@@ -156,7 +155,7 @@
                                                 <a class="modal-close right black-text"></a>
                                             </span>
                                             <small>
-                                                Está ação concede Privilégios de Administrador o(a) Usuário(a) <span class="primary-text">{{nome}}</span>
+                                                Está ação concede Privilégios de Administrador ao Cliente <span class="primary-text">{{nome}}</span>
                                                 <br><br>
                                                 Os Privilégios de Administrador incluem:
                                                 <blockquote>
@@ -188,7 +187,7 @@
                                                 <p>Confirmar Ação!</p>
                                                 <a class="modal-close right black-text"></a>
                                             </span>
-                                            <small>Está ação irá Deletar o(a) Usuário(a) <span class="primary-text">{{nome}}</span></small>
+                                            <small>Está ação irá Deletar o(a) Cliente <span class="primary-text">{{nome}}</span></small>
                                         </div>
                                         <div class="card-action white">
                                             <form action="/admin/user/delete/{{ident}}" method="post">
@@ -207,7 +206,7 @@
 
                 {{#if users_reserva}}
                     <hr>
-                    <small class="primary-text">Usuário(s) sem Acesso</small>
+                    <small class="primary-text">Cliente(s) sem Acesso</small>
 
                 {{/if}}
                 {{#each users_reserva}}

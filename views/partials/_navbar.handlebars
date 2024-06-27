@@ -20,7 +20,11 @@
                 </ul>
 
                 <ul class="right top-5 hide-on-large-only">
-                    <li><a href="login.html"><i class="bx bx-user"></i></a></li>
+                    {{#if user}}
+                    <li><a href="/user/perfil"><i class="bx bx-user"></i></a></li>
+                    {{else}}
+                    <li><a href="/user/login"><i class="bx bx-user"></i></a></li>
+                    {{/if}}
                 </ul>
 
             </div>

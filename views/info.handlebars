@@ -88,23 +88,38 @@
         <div class="row">
             <br><br>
             <h4>
-                <i class="bx bx-question-circle"></i>
+                <i class="bx bx-question-mark"></i>
                 FAQs
             </h4>
-            <hr><br>
+            <hr>
+            <small>Perguntas Frequêntes Respondidas</small>
+            <a href="/admin/faq/cadastro" class="btn right"><i class="bx bx-plus"></i></a> <br><br>
 
             <div class="row">
                 <ul class="collapsible expandable">
+                    {{#each faqs}}
                     <li>
                         <div class="collapsible-header blur-10">
-                            Terminar Sessão | Fechar a Conta
+                            {{titulo}}
+                        </div>
+                        <div class="collapsible-body primary">
+                            <textarea readonly class="materialize-textarea white-text">{{desc}}</textarea>
+                            <br><br>
+                            <small>{{date}}</small>
+                        </div>
+                    </li>
+                    {{else}}
+                    <li>
+                        <div class="collapsible-header blur-10">
+                            Sem FAQs
                         </div>
                         <div class="collapsible-body primary white-text">
                             <span>
-                                Terminar a Sessão, Fechar a Conta ou Sair do Aplicativo não Afeta os dados.
+                                De momento não há FAQs cadastradas...
                             </span>
                         </div>
                     </li>
+                    {{/each}}
                 </ul>
             </div>
 

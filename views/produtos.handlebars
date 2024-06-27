@@ -1,24 +1,31 @@
 <div class="container">
     <div class="row">
+        {{#if cat}}
+        <h4 class="upper titulo">
+            <i class="bx bx-shopping-bag primary-text"></i>
+            Produtos: <span class="detalhe primary">{{cat.titulo}}</span>
+        </h4>
+        {{else}}
         <h4 class="upper titulo">
             <i class="bx bx-shopping-bag primary-text"></i>
             Nossos Produtos
         </h4>
+        {{/if}}
         <hr>
     </div>
 
-    <div class="row">
-        {{#each cats}}
-        <a href="/categorias/ver/{{_id}}">
-            <div class="chip">
-                {{titulo}}
+    <div class="row cats">
+        {{#if cat}}
+        <a href="/produtos">
+            <div class="chip primary white-text">
+                <i class="bx bx-undo bx-xs"></i>
             </div>
         </a>
-        {{/each}}
+        {{/if}}
         {{#if cats}}
         <a href="/categorias">
             <div class="chip">
-                mais
+                todas
             </div>
         </a>
         {{else}}
@@ -26,19 +33,26 @@
             <div class="chip">cadastrar</div>
         </a>
         {{/if}}
+        {{#each cats}}
+        <a href="/categorias/ver/{{_id}}">
+            <div class="chip">
+                {{titulo}}
+            </div>
+        </a>
+        {{/each}}
     </div>
 
     <div class="row top-100">
         {{#if admin}}
         {{#each prods}}
-        <div class="col s10 m6 l4 push-s1">
+        <div class="col s12 m6 l4">
             <div class="card sticky-action">
 
                 <div class="card-image">
                     <img src="/img/corpo/{{foto}}" class="materialboxed">
                 </div>
 
-                <div class="card-action">
+                <div class="card-content">
                     <span class="card-title activator truncate">
                         <i class="bx bx-chevron-up"></i>
                         {{nome}}
@@ -48,7 +62,7 @@
 
                 <div class="card-action">
                     <a></a>
-                    <a class="btn right" href="produtos_ver.html">ver</a>
+                    {{!-- <a class="btn right" href="produtos_ver.html">ver</a> --}}
                 </div>
 
                 <div class="card-reveal blur-10">
@@ -71,10 +85,18 @@
                         <span>{{stock}}</span>
 
                         <br><br>
+                        <span class="detalhe black money"><i class="bx bxs-coin-stack"></i></span>
                         <span class="detalhe black money">
-                            <span class="money_format" style="font-size: large;">{{preco}}</span>
-                            <i class="bx bxs-coin-stack"></i>
+                            <span class="money_format" style="font-size: x-large;">{{preco}}</span>
                         </span>
+                    </div>
+
+                    <div class="top-100">
+                        <a href="#modal_confirmacao_delete_prod_{{_id}}"
+                            class="btn-flat modal-trigger waves-effect waves-red red-text"><i
+                                class="bx bx-trash"></i></a>
+                        <a href="/admin/produtos/edit/{{_id}}" class="btn-flat primary-text waves-effect right"><i
+                                class="bx bx-pen"></i></a>
                     </div>
                 </div>
 
@@ -94,14 +116,14 @@
         {{/each}}
         {{else}}
         {{#each prods}}
-        <div class="col s10 m6 l4 push-s1">
+        <div class="col s12 m6 l4">
             <div class="card sticky-action">
 
                 <div class="card-image">
                     <img src="/img/corpo/{{foto}}" class="materialboxed">
                 </div>
 
-                <div class="card-action">
+                <div class="card-content">
                     <span class="card-title activator truncate">
                         <i class="bx bx-chevron-up"></i>
                         {{nome}}
@@ -111,7 +133,7 @@
 
                 <div class="card-action">
                     <a></a>
-                    <a class="btn right" href="produtos_ver.html">ver</a>
+                    {{!-- <a class="btn right" href="produtos_ver.html">ver</a> --}}
                 </div>
 
                 <div class="card-reveal blur-10">
@@ -134,9 +156,9 @@
                         <span>{{stock}}</span>
 
                         <br><br>
+                        <span class="detalhe black money"><i class="bx bxs-coin-stack"></i></span>
                         <span class="detalhe black money">
-                            <span class="money_format" style="font-size: large;">{{preco}}</span>
-                            <i class="bx bxs-coin-stack"></i>
+                            <span class="money_format" style="font-size: x-large;">{{preco}}</span>
                         </span>
                     </div>
                 </div>
@@ -158,6 +180,29 @@
         {{/if}}
     </div>
 </div>
+
+{{#if admin}}
+{{#each prods}}
+<div class="row">
+    <div class="col s10 m6 l4 push-s1 push-m3 push-l4">
+        <div id="modal_confirmacao_delete_prod_{{_id}}" class="modal">
+            <div class="modal-content">
+                <h4>Deletar Este Produto?</h4>
+                <p class="red-text">Está ação é irreversível!</p>
+            </div>
+            <div class="modal-footer">
+                <form action="/admin/produtos/delete/{{_id}}" method="post">
+                    <input type="hidden" name="nome" value="{{nome}}">
+                    <input type="hidden" name="categoria" value="{{categoria}}">
+                    <button type="submit" class="btn red left">Sim, Deletar</button>
+                    <a class="modal-close right btn-flat">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}
+{{/if}}
 
 
 <script>

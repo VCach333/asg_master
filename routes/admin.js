@@ -11,6 +11,7 @@ require('../models/Crono')
 require('../models/User')
 require('../models/Categoria')
 require('../models/Prod')
+require('../models/Faq')
 
 
 const db = require('../config/db')
@@ -18,6 +19,7 @@ const Crono = mongoose.model('cronos')
 const User = mongoose.model('users')
 const Categoria = mongoose.model('cats')
 const Prod = mongoose.model('prods')
+const Faq = mongoose.model('faqs')
 const { isAdmin } = require('../helpers/funcs')
 
 var storage = multer.diskStorage({
@@ -94,9 +96,9 @@ router.post('/cronologia/empy', isAdmin, (req, res) => {
 router.get('/users', isAdmin, (req, res) => {
     User.find({ mode: 'admin' }).sort({ date: 'desc' }).lean().then((admins) => {
         User.find({ mode: 'admin' }).count().lean().then((admins_count) => {
-            User.find({ mode: 'user' }).sort({ date: 'desc' }).lean().then((users) => {
-                User.find({ mode: 'user' }).count().lean().then((users_count) => {
-                    User.find({ mode: 'user', status: 'online' }).count().lean().then((users_online_count) => {
+            User.find({ mode: 'cliente' }).sort({ date: 'desc' }).lean().then((users) => {
+                User.find({ mode: 'cliente' }).count().lean().then((users_count) => {
+                    User.find({ mode: 'cliente', status: 'online' }).count().lean().then((users_online_count) => {
                         res.render('admin/users', { admin: 'admin', users: users, users_count: users_count, admins: admins, admins_count: admins_count, users_online_count: users_online_count })
                     }).catch((err) => {
                         console.error('Houve um Erro - ' + err)
@@ -199,7 +201,7 @@ router.post('/cadastro/admin/:ident', isAdmin, (req, res) => {
 })
 
 router.post('/delete/admin/:ident', isAdmin, (req, res) => {
-    if (req.params.ident == 'admin_exclusivo_ident') {
+    if (req.params.ident == '999999999') {
         Crono.find().count().then((crono_qtd) => {
             const crono_cad = {
                 acao: 'Tentativa de Remover Admin Exclusivo',
@@ -227,7 +229,7 @@ router.post('/delete/admin/:ident', isAdmin, (req, res) => {
 
     } else {
         User.findOne({ ident: req.params.ident }).then((user) => {
-            user.mode = 'user'
+            user.mode = 'cliente'
 
             user.save().then(() => {
                 Crono.find().count().then((crono_qtd) => {
@@ -421,7 +423,7 @@ router.post('/categorias/edit/:id', isAdmin, (req, res) => {
 })
 
 router.get('/produtos/cadastro', isAdmin, (req, res) => {
-    Categoria.find().sort({_date:'desc'}).lean().then((cats) => {
+    Categoria.find().sort({ _date: 'desc' }).lean().then((cats) => {
         res.render('admin/prod_cad', { admin: 'admin', cats: cats })
     }).catch((err) => {
         console.log('Houve um Erro - ' + err)
@@ -499,6 +501,201 @@ router.post('/produtos/cadastro', isAdmin, upload.single('foto'), (req, res) => 
             console.log('Houve um Erro - ' + err)
             req.flash('error_msg', 'Houve um Erro')
             res.redirect('/produtos')
+        })
+    }
+
+})
+
+router.get('/produtos/edit/:id', isAdmin, (req, res) => {
+    Categoria.find().sort({ _date: 'desc' }).lean().then((cats) => {
+        Prod.findOne({ _id: req.params.id }).lean().then((prod_edit) => {
+            res.render('admin/prod_edit', { admin: 'admin', cats: cats, prod_edit: prod_edit })
+        }).catch((err) => {
+            console.log('Houve um Erro - ' + err)
+            req.flash('error_msg', 'Houve um Erro')
+            res.redirect('/produtos')
+        })
+    }).catch((err) => {
+        console.log('Houve um Erro - ' + err)
+        req.flash('error_msg', 'Houve um Erro')
+        res.redirect('/produtos')
+    })
+})
+
+router.post('/produtos/edit/:id', isAdmin, upload.single('foto'), (req, res) => {
+    var erros = []
+
+    if (!req.body.nome || typeof req.body.nome == undefined || typeof req.body.nome == null) {
+        erros.push({ texto: 'Nome Inválido' })
+    } if (req.body.nome.length < 2) {
+        erros.push({ texto: 'Nome muito Curto' })
+    } if (req.body.nome.length > 30) {
+        erros.push({ texto: 'Nome muito Longo! Máximo 30' })
+    }
+
+    if (!req.body.categoria || typeof req.body.categoria == undefined || typeof req.body.categoria == null) {
+        erros.push({ texto: 'Categoria Inválida' })
+    }
+
+    if (!req.body.preco || typeof req.body.preco == undefined || typeof req.body.preco == null || isNaN(req.body.preco)) {
+        erros.push({ texto: 'Preço Inválido' })
+    } if (req.body.preco.length < 4) {
+        erros.push({ texto: 'Preço muito Curto' })
+    } if (req.body.preco.length > 7) {
+        erros.push({ texto: 'Preço muito Longo! Máximo 7' })
+    }
+
+    if (!req.body.stock || typeof req.body.stock == undefined || typeof req.body.stock == null || isNaN(req.body.stock)) {
+        erros.push({ texto: 'Stock Inválido' })
+    }
+
+
+    if (erros.length > 0) {
+        req.flash('error_msg', 'Houve um Erro')
+        res.redirect('/admin/produtos/edit/' + req.params.id)
+    } else {
+
+        Prod.findOne({ _id: req.params.id }).then((prod_edit) => {
+
+            prod_edit.nome = req.body.nome
+            prod_edit.categoria = req.body.categoria
+            prod_edit.cores = req.body.cores
+            prod_edit.preco = req.body.preco
+            prod_edit.stock = req.body.stock
+            prod_edit.foto = req.body.fotoText
+
+            prod_edit.save().then(() => {
+                Crono.find().count().then((crono_qtd) => {
+                    const crono_cad = {
+                        acao: 'Cadastro de Produto',
+                        autor: req.user.ident,
+                        desc: `Admin ${req.user.nome} - ${req.user.ident} cadastrou a Produto ${req.body.nome}`,
+                        num: Number(crono_qtd + 1),
+                        date: globalDate('large'),
+                        _date: Date.now()
+                    }
+
+                    new Crono(crono_cad).save().then(() => {
+                        req.flash('success_msg', 'Produto Atualizado')
+                        res.redirect('/produtos')
+                    }).catch((err) => {
+                        console.log('Houve um Erro - ' + err)
+                        req.flash('error_msg', 'Houve um Erro')
+                        res.redirect('/produtos')
+                    })
+                }).catch((err) => {
+                    console.log('Houve um Erro - ' + err)
+                    req.flash('error_msg', 'Houve um Erro')
+                    res.redirect('/produtos')
+                })
+            }).catch((err) => {
+                console.log('Houve um Erro - ' + err)
+                req.flash('error_msg', 'Houve um Erro')
+                res.redirect('/produtos')
+            })
+        }).catch((err) => {
+            console.log('Houve um Erro - ' + err)
+            req.flash('error_msg', 'Houve um Erro')
+            res.redirect('/produtos')
+        })
+    }
+
+})
+
+router.post('/produtos/delete/:id', isAdmin, (req, res) => {
+    Prod.deleteOne({ _id: req.params.id }).then(() => {
+        Crono.find().count().then((crono_qtd) => {
+            const crono_cad = {
+                acao: 'Produto Deletado',
+                autor: req.user.ident,
+                desc: `Admin ${req.user.nome} - ${req.user.ident} deletou o Produto ${req.body.nome} da Categoria ${req.body.categoria}`,
+                num: Number(crono_qtd + 1),
+                date: globalDate('large'),
+                _date: Date.now()
+            }
+
+            new Crono(crono_cad).save().then(() => {
+                req.flash('success_msg', 'Produto Deletado')
+                res.redirect('/produtos')
+            }).catch((err) => {
+                console.log('Houve um Erro - ' + err)
+                req.flash('error_msg', 'Houve um Erro')
+                res.redirect('/produtos')
+            })
+        }).catch((err) => {
+            console.log('Houve um Erro - ' + err)
+            req.flash('error_msg', 'Houve um Erro')
+            res.redirect('/produtos')
+        })
+    }).catch((err) => {
+        console.log('Houve um Erro - ' + err)
+        req.flash('error_msg', 'Houve um Erro')
+        res.redirect('/produtos')
+    })
+
+})
+
+router.get('/faq/cadastro', isAdmin, (req, res) => {
+    res.render('admin/faq_cad', { admin: 'admin' })
+})
+
+router.post('/faq/cadastro', isAdmin, upload.single('foto'), (req, res) => {
+    var erros = []
+
+    if (!req.body.titulo_faq || typeof req.body.titulo_faq == undefined || typeof req.body.titulo_faq == null) {
+        erros.push({ texto: 'Título Inválido' })
+    } if (req.body.titulo_faq.length < 2) {
+        erros.push({ texto: 'Título muito Curto' })
+    } if (req.body.titulo_faq.length > 100) {
+        erros.push({ texto: 'Título muito Longo! Máximo 100' })
+    }
+
+    if (!req.body.desc_faq || typeof req.body.desc_faq == undefined || typeof req.body.desc_faq == null) {
+        erros.push({ texto: 'Descrição Inválida' })
+    } if (req.body.desc_faq.length < 10) {
+        erros.push({ texto: 'Descrição muito Curta' })
+    } if (req.body.desc_faq.length > 500) {
+        erros.push({ texto: 'Descrição muito Longa! Máximo 500' })
+    }
+
+    const faq_cad = {
+        titulo: req.body.titulo_faq,
+        desc: req.body.desc_faq,
+        date: globalDate('large'),
+        _date: Date.now()
+    }
+
+    if (erros.length > 0) {
+        res.render('admin/faq_cad', { erros: erros, faq_cad: faq_cad })
+    } else {
+        new Faq(faq_cad).save().then(() => {
+            Crono.find().count().then((crono_qtd) => {
+                const crono_cad = {
+                    acao: 'Cadastro de FAQ',
+                    autor: req.user.ident,
+                    desc: `Admin ${req.user.nome} - ${req.user.ident} cadastrou a FAQ ${req.body.titulo}`,
+                    num: Number(crono_qtd + 1),
+                    date: globalDate('large'),
+                    _date: Date.now()
+                }
+
+                new Crono(crono_cad).save().then(() => {
+                    req.flash('success_msg', 'FAQ Cadastrada')
+                    res.redirect('/info#faqs')
+                }).catch((err) => {
+                    console.log('Houve um Erro - ' + err)
+                    req.flash('error_msg', 'Houve um Erro')
+                    res.redirect('/info#faqs')
+                })
+            }).catch((err) => {
+                console.log('Houve um Erro - ' + err)
+                req.flash('error_msg', 'Houve um Erro')
+                res.redirect('/info#faqs')
+            })
+        }).catch((err) => {
+            console.log('Houve um Erro - ' + err)
+            req.flash('error_msg', 'Houve um Erro')
+            res.redirect('/info#faqs')
         })
     }
 
